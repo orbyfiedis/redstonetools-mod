@@ -6,6 +6,12 @@ import com.domain.redstonetools.macros.triggers.Trigger;
 import java.util.List;
 
 public class Macro {
+
+    public Macro(String name) {
+        this.name = name;
+    }
+
+    final String name;
     boolean enabled;
     List<Trigger> triggers;
     List<Action> actions;
@@ -33,4 +39,5 @@ public class Macro {
             action.run();
         }
     }
+
 }

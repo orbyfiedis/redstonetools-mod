@@ -6,6 +6,7 @@ import com.domain.redstonetools.features.arguments.Argument;
 import com.google.inject.AbstractModule;
 import org.reflections.Reflections;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -73,5 +74,16 @@ public class ReflectionUtils {
         }
 
         return feature;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getFieldValue(Class<?> clazz, Object on, String name) {
+        try {
+            Field f = clazz.getDeclaredField(name);
+            f.setAccessible(true);
+            return (T) f.get(on);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

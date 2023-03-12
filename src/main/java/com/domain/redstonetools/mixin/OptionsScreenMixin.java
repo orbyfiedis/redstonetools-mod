@@ -2,6 +2,7 @@ package com.domain.redstonetools.mixin;
 
 import com.domain.redstonetools.gui.screens.MacrosScreen;
 import com.domain.redstonetools.utils.ReflectionUtils;
+import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
@@ -28,6 +29,8 @@ public class OptionsScreenMixin {
 
     private static final Method addDrawableChildMethod;
 
+    private final MinecraftClient client = MinecraftClient.getInstance();
+
     static {
         addDrawableChildMethod = Arrays.stream(Screen.class.getMethods())
                 .filter(method -> method.getName().equals("addDrawableChild"))
@@ -39,14 +42,10 @@ public class OptionsScreenMixin {
 
     @Shadow @Final private GameOptions settings;
 
-    private MinecraftClient getClient() {
-        return (MinecraftClient) ReflectionUtils.getFieldValue(Screen.class, self, "client");
-    }
-
     @Inject(method = "init", at = @At("RETURN"))
     private void init(CallbackInfo ci) {
         addDrawableChild(new ButtonWidget(self.width / 2 - 310 / 2, self.height / 6 + 144 - 6, 310, 20, new LiteralText("Redstone Tools Settings..."), (button) -> {
-            getClient().setScreen(new MacrosScreen(self, settings));
+            client.setScreenAndRender(new CottonClientScreen(new MacrosScreen(self)));
         }));
     }
 

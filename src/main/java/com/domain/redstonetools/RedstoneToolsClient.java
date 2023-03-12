@@ -2,6 +2,7 @@ package com.domain.redstonetools;
 
 
 import com.domain.redstonetools.features.commands.update.RegionUpdater;
+import com.domain.redstonetools.macros.MacroManager;
 import com.domain.redstonetools.utils.ReflectionUtils;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -30,5 +31,8 @@ public class RedstoneToolsClient implements ClientModInitializer {
 
             feature.register();
         }
+
+        // Load macro manager
+        MacroManager.get().loadAll();
     }
 }
