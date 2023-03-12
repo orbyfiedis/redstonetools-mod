@@ -2,6 +2,7 @@ package com.domain.redstonetools.macros;
 
 import com.domain.redstonetools.RedstoneToolsClient;
 
+import javax.crypto.Mac;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,14 +18,20 @@ public class MacroManager {
 
     ////////////////////////////////////////////
 
-    private final Map<String, Macro> macros = new LinkedHashMap<>();
+    private final List<Macro> macroList = new ArrayList<>();
 
-    public Map<String, Macro> getMacros() {
-        return macros;
+    {
+        // init test macros
+        macroList.add(new Macro("Test1"));
+        macroList.add(new Macro("Test2"));
+    }
+
+    public List<Macro> getMacros() {
+        return macroList;
     }
 
     public void addMacro(Macro macro) {
-        macros.put(macro.name, macro);
+        macroList.add(macro);
     }
 
     /* Persistence */

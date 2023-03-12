@@ -1,7 +1,6 @@
 package com.domain.redstonetools.mixin;
 
-import com.domain.redstonetools.gui.screens.MacrosScreen;
-import com.domain.redstonetools.utils.ReflectionUtils;
+import com.domain.redstonetools.gui.MacrosScreen;
 import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;

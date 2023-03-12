@@ -16,6 +16,37 @@ public class Macro {
     List<Trigger> triggers;
     List<Action> actions;
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public Macro setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
+    public List<Trigger> getTriggers() {
+        return triggers;
+    }
+
+    public Macro setTriggers(List<Trigger> triggers) {
+        this.triggers = triggers;
+        return this;
+    }
+
+    public List<Action> getActions() {
+        return actions;
+    }
+
+    public Macro setActions(List<Action> actions) {
+        this.actions = actions;
+        return this;
+    }
+
     public void update() {
         if (!enabled) {
             return;
