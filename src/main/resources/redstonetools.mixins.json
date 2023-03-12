@@ -12,5 +12,8 @@
     "LocalSessionMixin",
     "BlockMixin",
     "MinecraftClientMixin"
+  ],
+  "client": [
+    "OptionsScreenMixin"
   ]
 }
