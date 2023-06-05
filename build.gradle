@@ -23,10 +23,35 @@ repositories {
         name = "WorldEdit Maven"
         url = "https://maven.enginehub.org/repo/"
     }
+
 	maven {
 		name = "JitPack"
 		url = "https://jitpack.io"
 	}
+}
+
+
+shadowJar {
+	archiveClassifier = "unmapped"
+
+	configurations = [project.configurations.shadow]
+
+	from("LICENSE")
+}
+
+remapJar {
+	inputFile = shadowJar.archiveFile
+}
+
+dependencies {
+	// jUnit 5
+	include implementation('org.junit.jupiter:junit-jupiter:5.8.1')
+
+	// Guice
+	include implementation('com.google.inject:guice:5.0.1')
+
+	// Reflections
+	include implementation('org.reflections:reflections:0.9.12')
 }
 
 dependencies {
