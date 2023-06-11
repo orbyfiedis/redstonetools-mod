@@ -6,6 +6,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import tools.redstone.redstonetools.features.feedback.Feedback;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,16 +16,28 @@ public class CommandUtils {
     private CommandUtils() { }
 
     public static void register(String name, List<Argument<?>> arguments, Command<ServerCommandSource> executor, CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
+        // add command handler to executor
+        Command<ServerCommandSource> safeExecutor = context -> {
+            try {
+                return executor.run(context);
+            } catch (Exception e) {
+                Feedback.error("An unexpected error occurred while trying to execute that command")
+                        .send(context.getSource());
+                e.printStackTrace();
+                return 0;
+            }
+        };
+
         var base = CommandManager.literal(name);
 
         if (arguments.stream().allMatch(Argument::isOptional)) {
-            base.executes(executor);
+            base.executes(safeExecutor);
         }
 
         if (!arguments.isEmpty()) {
             base.then(createArgumentChain(arguments.stream()
                     .sorted((a, b) -> Boolean.compare(a.isOptional(), b.isOptional()))
-                    .toList(), executor));
+                    .toList(), safeExecutor));
         }
 
         dispatcher.register(base);

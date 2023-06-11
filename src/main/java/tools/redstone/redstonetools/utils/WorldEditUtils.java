@@ -1,5 +1,6 @@
 package tools.redstone.redstonetools.utils;
 
+import net.minecraft.util.math.BlockPos;
 import tools.redstone.redstonetools.features.feedback.Feedback;
 import com.mojang.datafixers.util.Either;
 import com.sk89q.worldedit.IncompleteRegionException;
@@ -57,5 +58,9 @@ public class WorldEditUtils {
         } catch (IncompleteRegionException ex) {
             return Either.right(Feedback.invalidUsage("Please make a selection with WorldEdit first"));
         }
+    }
+
+    public static BlockPos toBlockPos(BlockVector3 vec) {
+        return new BlockPos(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ());
     }
 }
